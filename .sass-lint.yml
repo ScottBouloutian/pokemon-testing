@@ -1,0 +1,10 @@
+options:
+  formatter: stylish
+files:
+  include: '**/*.s+(a|c)ss'
+  ignore: node_modules/**
+rules:
+  indentation:
+    - 2
+    -
+      size: 4

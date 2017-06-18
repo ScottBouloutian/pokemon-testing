@@ -73,6 +73,8 @@ class App extends Component {
 
     render() {
         const { appLoading, sprite, stats, pokemonName, pokemonLoading } = this.state;
+
+        // Stats section of the application
         const statsInfo = map(stats, ({ name, width }) => {
             const { icon, color } = statAssets[name];
             const statStyle = {
@@ -86,44 +88,54 @@ class App extends Component {
               </div>
             );
         });
+
+        // Title section of the application
         const titleSection = pokemonLoading ? (
-          <img alt="pikachu" src="images/pikachu.gif" />
-    ) : (
-      <h1>{pokemonName}</h1>
-    );
-        const main = appLoading ? (
+          <img alt="loading" src="images/pikachu.gif" />
+        ) : (
+          <h1>{pokemonName}</h1>
+        );
+
+        // Loading section of the application
+        const loadingSection = (
           <div className="loading">
             <img alt="loading" src="images/loading.gif" />
           </div>
-    ) : (
-      <div className="container">
-        <div className="title-section">
-          {titleSection}
-        </div>
-        <div className="info">
-          <div className="pokemon-section">
-            { sprite ? <img alt={name} src={sprite} /> : null }
+        );
+
+        // Main section of the application
+        const mainSection = (
+          <div className="container">
+            <div className="title-section">
+              {titleSection}
+            </div>
+            <div className="info">
+              <div className="pokemon-section">
+                { sprite ? <img alt={pokemonName} src={sprite} /> : null }
+              </div>
+              <div className="stats-info">
+                {statsInfo}
+              </div>
+            </div>
+            <div
+              className="pokeball"
+              role="button"
+              tabIndex={0}
+              onClick={() => this.pokeballClicked()}
+            >
+              <img alt="pokeball" src={pokeball} />
+            </div>
           </div>
-          <div className="stats-info">
-            {statsInfo}
-          </div>
-        </div>
-        <div role="button" tabIndex={0} onClick={() => this.pokeballClicked()}>
-          <img
-            alt="pokeball"
-            className="pokeball"
-            src={pokeball}
-          />
-        </div>
-      </div>
-    );
+        );
+
+        // Framework of the application
         return (
-          <div className="App">
-            <div className="App-header">
+          <div className="app">
+            <div className="app-header">
               <h2>Pokemon Testing</h2>
             </div>
-            <div className="App-intro">
-              {main}
+            <div className="app-intro">
+              {appLoading ? loadingSection : mainSection}
             </div>
           </div>
         );

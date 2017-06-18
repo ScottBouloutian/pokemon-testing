@@ -20,7 +20,8 @@
     "gh-pages": "^1.0.0",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "sass-lint": "^1.10.2"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -31,7 +32,7 @@
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "lint": "eslint src --ext js,jsx",
+    "lint": "sass-lint && eslint src --ext js,jsx",
     "eject": "react-scripts eject"
   }
 }
