@@ -19,12 +19,45 @@ class App extends Component {
             pokemonLoading: false,
         };
         this.pokedex = new Pokedex();
+        this.statsElement = null;
     }
 
     componentWillMount() {
-        this.pokedex.initialize().then(() => {
+        this.pokedex.initialize()
+        .then(() => this.getRandomPokemon())
+        .then(() => {
             this.setState({ appLoading: false });
-        }).catch(error => this.setState({ error }));
+        })
+        .catch(error => this.setState({ error }));
+    }
+
+    getRandomPokemon() {
+        this.setState({ pokemonLoading: true });
+        return this.pokedex.randomPokemon()
+        .then((pokemon) => {
+            const sprite = pokemon.sprites.front_default;
+            const stats = chain(pokemon.stats)
+            .map(({ stat, base_stat }) => ({
+                name: stat.name,
+                value: base_stat,
+                width: 0,
+            }))
+            .reverse()
+            .value();
+            this.setState({
+                sprite,
+                stats,
+                pokemonName: pokemon.name,
+                pokemonLoading: false,
+            });
+            return this.animateStatBars(stats);
+        })
+        .catch(error =>
+            this.setState({
+                error,
+                pokemonLoading: false,
+            }),
+        );
     }
 
     animateStatBars(stats) {
@@ -42,35 +75,6 @@ class App extends Component {
         ));
     }
 
-    pokeballClicked() {
-        this.setState({ pokemonLoading: true });
-        this.pokedex.randomPokemon()
-      .then((pokemon) => {
-          const sprite = pokemon.sprites.front_default;
-          const stats = chain(pokemon.stats)
-          .map(({ stat, base_stat }) => ({
-              name: stat.name,
-              value: base_stat,
-              width: 0,
-          }))
-          .reverse()
-          .value();
-          this.setState({
-              sprite,
-              stats,
-              name: pokemon.name,
-              pokemonLoading: false,
-          });
-          return this.animateStatBars(stats);
-      })
-      .catch(error =>
-        this.setState({
-            error,
-            pokemonLoading: false,
-        }),
-      );
-    }
-
     render() {
         const { appLoading, sprite, stats, pokemonName, pokemonLoading } = this.state;
 
@@ -79,7 +83,7 @@ class App extends Component {
             const { icon, color } = statAssets[name];
             const statStyle = {
                 backgroundColor: color,
-                width: `${width * 4}px`,
+                width: `${width * 2}px`,
             };
             return (
               <div className="stat" key={name}>
@@ -113,7 +117,7 @@ class App extends Component {
               <div className="pokemon-section">
                 { sprite ? <img alt={pokemonName} src={sprite} /> : null }
               </div>
-              <div className="stats-info">
+              <div className="stats-info" ref={element => (this.statsElement = element)}>
                 {statsInfo}
               </div>
             </div>
@@ -121,7 +125,7 @@ class App extends Component {
               className="pokeball"
               role="button"
               tabIndex={0}
-              onClick={() => this.pokeballClicked()}
+              onClick={() => this.getRandomPokemon()}
             >
               <img alt="pokeball" src={pokeball} />
             </div>
@@ -131,9 +135,6 @@ class App extends Component {
         // Framework of the application
         return (
           <div className="app">
-            <div className="app-header">
-              <h2>Pokemon Testing</h2>
-            </div>
             <div className="app-intro">
               {appLoading ? loadingSection : mainSection}
             </div>
