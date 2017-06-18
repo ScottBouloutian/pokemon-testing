@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
-import Pokedex from './Pokedex';
 import { chain, map } from 'lodash';
-import pokeball from './images/pokeball.svg';
-import statAssets from './statAssets';
 import { tween } from 'shifty';
 import Promise from 'bluebird';
+import './App.css';
+import Pokedex from './Pokedex';
+import pokeball from './images/pokeball.svg';
+import statAssets from './statAssets';
 
 class App extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class App extends Component {
       sprite: null,
       stats: [],
       error: null,
-      name: '',
+      pokemonName: '',
       pokemonLoading: false,
     };
 
@@ -31,7 +31,7 @@ class App extends Component {
   pokeballClicked() {
     this.setState({ pokemonLoading: true });
     this.pokedex.randomPokemon()
-      .then(pokemon => {
+      .then((pokemon) => {
         const sprite = pokemon.sprites.front_default;
         const stats = chain(pokemon.stats)
           .map(({ stat, base_stat }) => ({
@@ -47,14 +47,14 @@ class App extends Component {
           name: pokemon.name,
           pokemonLoading: false,
         });
-        return Promise.map(stats, stat => (
+        return Promise.map(stats, (stat, index) => (
           tween({
             from: { width: 0 },
             to: { width: stat.value },
             duration: 500,
             easing: 'easeTo',
             step: ({ width }) => {
-              stat.width = width;
+              stats[index].width = width;
               this.setState({ stats });
             },
           })
@@ -64,12 +64,12 @@ class App extends Component {
         this.setState({
           error,
           pokemonLoading: false,
-        })
+        }),
       );
   }
 
   render() {
-    const { appLoading, sprite, stats, name, pokemonLoading } = this.state;
+    const { appLoading, sprite, stats, pokemonName, pokemonLoading } = this.state;
     const statsInfo = map(stats, ({ name, width }) => {
       const { icon, color } = statAssets[name];
       const statStyle = {
@@ -85,8 +85,8 @@ class App extends Component {
     });
     const titleSection = pokemonLoading ? (
       <img alt="pikachu" src="images/pikachu.gif" />
-    ): (
-      <h1>{name}</h1>
+    ) : (
+      <h1>{pokemonName}</h1>
     );
     const main = appLoading ? (
       <div className="loading">
@@ -105,7 +105,13 @@ class App extends Component {
             {statsInfo}
           </div>
         </div>
-        <img alt="pokeball" className="pokeball" src={pokeball} onClick={() => this.pokeballClicked()} />
+        <div role="button" tabIndex={0} onClick={() => this.pokeballClicked()}>
+          <img
+            alt="pokeball"
+            className="pokeball"
+            src={pokeball}
+          />
+        </div>
       </div>
     );
     return (

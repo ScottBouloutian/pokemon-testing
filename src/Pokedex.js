@@ -1,6 +1,19 @@
 import { random, reduce } from 'lodash';
 import Promise from 'bluebird';
 
+function request(uri, params) {
+  const query = reduce(params, (result, value, key) => `${result}${key}=${value}&`, '');
+  const querystring = (query === '') ? query : `?${query.slice(0, -1)}`;
+  const apiRequest = new Request(`${uri}${querystring}`);
+  return fetch(apiRequest).then((response) => {
+    const { status } = response;
+    if (status === 200) {
+      return response.json();
+    }
+    throw new Error(`error code ${status}`);
+  });
+}
+
 export default class Pokedex {
   constructor() {
     this.host = 'https://pokeapi.co/api/v2';
@@ -12,7 +25,7 @@ export default class Pokedex {
       limit: 0,
       offset: 0,
     };
-    return this.request(`${this.host}/pokemon`, params).then(({ count }) => {
+    return request(`${this.host}/pokemon`, params).then(({ count }) => {
       this.pokemonCount = count;
     });
   }
@@ -23,23 +36,7 @@ export default class Pokedex {
       offset: random(this.pokemonCount),
     };
     return Promise.resolve()
-      .then(() => this.request(`${this.host}/pokemon`, params))
-      .then(({ results }) => {
-          return this.request(results[0].url);
-      });
-  }
-
-  request(uri, params) {
-    const query = reduce(params, (result, value, key) => `${result}${key}=${value}&`, '');
-    const querystring = (query === '') ? query : `?${query.slice(0, -1)}`;
-    const request = new Request(`${uri}${querystring}`);
-    return fetch(request).then(response => {
-      const { status } = response;
-      if (status === 200) {
-        return response.json();
-      } else {
-        throw new Error(`error code ${status}`);
-      }
-    });
+      .then(() => request(`${this.host}/pokemon`, params))
+      .then(({ results }) => request(results[0].url));
   }
 }

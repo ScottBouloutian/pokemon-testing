@@ -11,6 +11,11 @@
     "shifty": "^2.1.0"
   },
   "devDependencies": {
+    "eslint": "^3.0.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
+    "eslint-plugin-react": "^7.1.0",
     "gh-pages": "^1.0.0",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
@@ -25,6 +30,7 @@
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "lint": "eslint **/*.js",
     "eject": "react-scripts eject"
   }
 }
