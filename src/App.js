@@ -84,13 +84,13 @@ class App extends Component {
       );
     });
     const titleSection = pokemonLoading ? (
-      <img alt="pikachu" src="/images/pikachu.gif" />
+      <img alt="pikachu" src="images/pikachu.gif" />
     ): (
       <h1>{name}</h1>
     );
     const main = appLoading ? (
       <div className="loading">
-        <img alt="loading" src="/images/loading.gif" />
+        <img alt="loading" src="images/loading.gif" />
       </div>
     ) : (
       <div className="container">
