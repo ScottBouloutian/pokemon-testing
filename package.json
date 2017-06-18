@@ -1,5 +1,6 @@
 {
   "name": "pokemon-testing",
+  "homepage": "https://scottbouloutian.github.io/pokemon-testing/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
