@@ -1,13 +1,13 @@
 {
-  "main.css": "static/css/main.7db2785a.css",
-  "main.css.map": "static/css/main.7db2785a.css.map",
-  "main.js": "static/js/main.c6418771.js",
-  "main.js.map": "static/js/main.c6418771.js.map",
-  "static\\media\\fist.svg": "static/media/fist.bdc7d2fc.svg",
-  "static\\media\\flame.svg": "static/media/flame.8aee73a0.svg",
-  "static\\media\\heart.svg": "static/media/heart.1f4198aa.svg",
-  "static\\media\\pokeball.svg": "static/media/pokeball.2b4798f5.svg",
-  "static\\media\\running.svg": "static/media/running.07cab6c0.svg",
-  "static\\media\\shield.svg": "static/media/shield.68312109.svg",
-  "static\\media\\swords.svg": "static/media/swords.5735281b.svg"
+  "main.css": "static/css/main.3e101a6b.css",
+  "main.css.map": "static/css/main.3e101a6b.css.map",
+  "main.js": "static/js/main.1f24d9ae.js",
+  "main.js.map": "static/js/main.1f24d9ae.js.map",
+  "static/media/fist.svg": "static/media/fist.1259a928.svg",
+  "static/media/flame.svg": "static/media/flame.6fead1e4.svg",
+  "static/media/heart.svg": "static/media/heart.9747d304.svg",
+  "static/media/pokeball.svg": "static/media/pokeball.02fe8e4f.svg",
+  "static/media/running.svg": "static/media/running.7b0bcc1c.svg",
+  "static/media/shield.svg": "static/media/shield.16728305.svg",
+  "static/media/swords.svg": "static/media/swords.49b711d7.svg"
 }
