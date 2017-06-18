@@ -18,7 +18,6 @@ class App extends Component {
       pokemonName: '',
       pokemonLoading: false,
     };
-
     this.pokedex = new Pokedex();
   }
 
