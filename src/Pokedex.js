@@ -25,9 +25,8 @@ export default class Pokedex {
             limit: 0,
             offset: 0,
         };
-        return request(`${this.host}/pokemon`, params).then(({ count }) => {
-            this.pokemonCount = count;
-        });
+        return request(`${this.host}/pokemon`, params)
+            .then(({ count }) => (this.pokemonCount = count));
     }
 
     randomPokemon() {
@@ -36,7 +35,7 @@ export default class Pokedex {
             offset: random(this.pokemonCount),
         };
         return Promise.resolve()
-      .then(() => request(`${this.host}/pokemon`, params))
-      .then(({ results }) => request(results[0].url));
+            .then(() => request(`${this.host}/pokemon`, params))
+            .then(({ results }) => request(results[0].url));
     }
 }

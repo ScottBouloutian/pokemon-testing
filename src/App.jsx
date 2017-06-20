@@ -24,7 +24,6 @@ class App extends Component {
 
     componentWillMount() {
         this.pokedex.initialize()
-        .then(() => this.getRandomPokemon())
         .then(() => {
             this.setState({ appLoading: false });
         })
