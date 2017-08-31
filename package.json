@@ -18,12 +18,15 @@
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.1.0",
     "gh-pages": "^1.0.0",
+    "jsdoc": "^3.5.4",
+    "minami": "^1.2.3",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.0.2",
     "react-scripts": "1.0.7",
     "sass-lint": "^1.10.2"
   },
   "scripts": {
+    "docs": "jsdoc --configure .jsdoc.json",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build-css": "node-sass-chokidar src/ -o src/",

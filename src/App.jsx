@@ -7,7 +7,17 @@ import Pokedex from './Pokedex';
 import pokeball from './images/pokeball.svg';
 import statAssets from './statAssets';
 
+/**
+* @author Scott Bouloutian <ScottBouloutian@gmail.com>
+* @class
+* @classdesc The main app component
+* @extends Component
+*/
 class App extends Component {
+    /**
+    * The main app component
+    * @constructor
+    */
     constructor() {
         super();
         this.state = {
@@ -22,6 +32,9 @@ class App extends Component {
         this.statsElement = null;
     }
 
+    /**
+    * Initializes the pokedex
+    */
     componentWillMount() {
         this.pokedex.initialize()
         .then(() => {
@@ -30,6 +43,10 @@ class App extends Component {
         .catch(error => this.setState({ error }));
     }
 
+    /**
+    * Gets a random pokemon and extracts its statistics
+    * @returns {Promise} A promise that resolves once the api request and animations complete
+    */
     getRandomPokemon() {
         this.setState({ pokemonLoading: true });
         return this.pokedex.randomPokemon()
@@ -59,6 +76,11 @@ class App extends Component {
         );
     }
 
+    /**
+    * Animates the user inferface to reflect the given statistics
+    * @param {Object} stats The statictics to be shown
+    * @returns {Promise} Resolves when the animations complete
+    */
     animateStatBars(stats) {
         return Promise.map(stats, stat => (
             tween({
@@ -74,6 +96,10 @@ class App extends Component {
         ));
     }
 
+    /**
+    * The render function of this component
+    * @returns {JSX} The rendered jsx
+    */
     render() {
         const { appLoading, sprite, stats, pokemonName, pokemonLoading } = this.state;
 
