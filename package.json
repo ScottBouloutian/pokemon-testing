@@ -26,7 +26,7 @@
     "sass-lint": "^1.10.2"
   },
   "scripts": {
-    "docs": "jsdoc --configure .jsdoc.json",
+    "docs": "jsdoc --configure .jsdoc.json && postmanerator -output=./postman/index.html -collection=./postman/collection.json",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "build-css": "node-sass-chokidar src/ -o src/",
